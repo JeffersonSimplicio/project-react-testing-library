@@ -36,4 +36,14 @@ describe('Teste do componente App', () => {
     const { location: { pathname } } = history;
     expect(pathname).toBe('/about');
   });
+
+  test('Link "Favorite Pokémons" leva para rota  "/favorites"', () => {
+    const { history } = renderWithRouter(<App />);
+    const linkFavorite = screen.getByRole('link', { name: 'Favorite Pokémons' });
+
+    userEvent.click(linkFavorite);
+
+    const { location: { pathname } } = history;
+    expect(pathname).toBe('/favorites');
+  });
 });
