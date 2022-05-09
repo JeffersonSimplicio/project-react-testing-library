@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from './renderWithRouter';
 
@@ -17,13 +17,13 @@ describe('Teste do componente App', () => {
     expect(linkFavorite).toBeInTheDocument();
   });
 
-  // test('Link "Home" leva para rota  "/"', () => {
-  //   const { history } = renderWithRouter(<App />);
-  //   const linkHome = screen.getByRole('link', { name: 'Home' });
+  test('Link "Home" leva para rota  "/"', () => {
+    const { history } = renderWithRouter(<App />);
+    const linkHome = screen.getByRole('link', { name: 'Home' });
 
-  //   userEvent.click(linkHome);
+    userEvent.click(linkHome);
 
-  //   const { location: { pathname } } = history;
-  //   expect(pathname).toBe('/');
-  // });
+    const { location: { pathname } } = history;
+    expect(pathname).toBe('/');
+  });
 });
