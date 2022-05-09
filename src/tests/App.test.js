@@ -46,4 +46,16 @@ describe('Teste do componente App', () => {
     const { location: { pathname } } = history;
     expect(pathname).toBe('/favorites');
   });
+
+  test('É direcionado para Not Found quando uma url desconhecida é inserida', () => {
+    const { history } = renderWithRouter(<App />);
+
+    history.push('/unknown-route');
+
+    const notFound = screen.getByRole(
+      'heading',
+      { level: 2, name: /Page requested not found/ },
+    );
+    expect(notFound).toBeInTheDocument();
+  });
 });
