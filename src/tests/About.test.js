@@ -7,7 +7,17 @@ import { About } from '../components';
 describe('Testes do componente About', () => {
   test('Se contem impormações sobre a Pokedex', () => {
     render(<About />);
+
     const infoDex = screen.getByText(/a digital encyclopedia containing all/);
+
     expect(infoDex).toBeInTheDocument();
+  });
+
+  test('Contem um h2 contedo o texto "About Pokédex"', () => {
+    render(<About />);
+
+    const heading = screen.getByRole('heading', { level: 2, name: 'About Pokédex' });
+
+    expect(heading).toBeInTheDocument();
   });
 });
