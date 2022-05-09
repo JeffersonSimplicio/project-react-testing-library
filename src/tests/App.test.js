@@ -26,4 +26,14 @@ describe('Teste do componente App', () => {
     const { location: { pathname } } = history;
     expect(pathname).toBe('/');
   });
+
+  test('Link "About" leva para rota  "/about"', () => {
+    const { history } = renderWithRouter(<App />);
+    const linkAbout = screen.getByRole('link', { name: 'About' });
+
+    userEvent.click(linkAbout);
+
+    const { location: { pathname } } = history;
+    expect(pathname).toBe('/about');
+  });
 });
