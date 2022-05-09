@@ -20,4 +20,14 @@ describe('Testes do componente About', () => {
 
     expect(heading).toBeInTheDocument();
   });
+
+  test('Existe dois paragrafos sobre a pokedex', () => {
+    render(<About />);
+
+    const pOne = screen.getByText(/This application simulates/);
+    const pTwo = screen.getByText(/One can filter/);
+
+    expect(pOne).toBeInTheDocument();
+    expect(pTwo).toBeInTheDocument();
+  });
 });
