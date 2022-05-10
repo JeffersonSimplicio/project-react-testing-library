@@ -56,4 +56,24 @@ describe('Testes da componente Pokemon Details', () => {
     const powerPlant = screen.getByText('Kanto Power Plant');
     expect(powerPlant).toBeInTheDocument();
   });
+
+  test('Favoritando o pokemon atraves da pagina de detalhes', () => {
+    renderWithRouter(<App />);
+    const details = screen.getByRole('link', { name: moreDetails });
+    expect(details).toBeInTheDocument();
+    userEvent.click(details);
+
+    const checkedFavorite = screen.getByRole('checkbox', { name: 'Pokémon favoritado?' });
+    expect(checkedFavorite).toBeInTheDocument();
+
+    userEvent.click(checkedFavorite);
+
+    const favoriteOn = screen.getByAltText('Pikachu is marked as favorite');
+    expect(favoriteOn).toBeInTheDocument();
+
+    userEvent.click(checkedFavorite);
+
+    const favoriteOff = screen.queryByAltText('Pikachu is marked as favorite');
+    expect(favoriteOff).not.toBeInTheDocument();
+  });
 });
