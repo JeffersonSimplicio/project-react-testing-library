@@ -13,8 +13,9 @@ describe('Teste da componente', () => {
     const pokemonName = screen.getByText('Pikachu');
     expect(pokemonName).toBeInTheDocument();
 
-    const pokemonType = screen.getAllByText('Electric');
-    expect(pokemonType[0]).toBeInTheDocument();
+    const pokemonType = screen.getByTestId('pokemon-type');
+    expect(pokemonType.innerHTML).toBe('Electric');
+    expect(pokemonType).toBeInTheDocument();
 
     const pokemonWeight = screen.getByText('Average weight: 6.0 kg');
     expect(pokemonWeight).toBeInTheDocument();
@@ -55,5 +56,21 @@ describe('Teste da componente', () => {
 
     const { location: { pathname } } = history;
     expect(pathname).toBe('/pokemons/25');
+  });
+
+  test('Os pokemons favoritos possuem estrela', () => {
+    renderWithRouter(<App />);
+
+    const linkDetails = screen.getByRole('link', { name: moreDetails });
+    expect(linkDetails).toBeInTheDocument();
+    userEvent.click(linkDetails);
+
+    const checkFavorite = screen.getByLabelText('Pokémon favoritado?');
+    expect(checkFavorite).toBeInTheDocument();
+    userEvent.click(checkFavorite);
+
+    const iconFavorite = screen.getByAltText('Pikachu is marked as favorite');
+    expect(iconFavorite).toHaveAttribute('src', '/star-icon.svg');
+    expect(iconFavorite).toBeInTheDocument();
   });
 });
