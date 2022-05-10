@@ -30,30 +30,30 @@ describe('Testes da componente Pokemon Details', () => {
     expect(infoPoke).toBeInTheDocument();
   });
 
-  // test('Os mapas com localização do pokemon são exibidos', () => {
-  //   renderWithRouter(<App />);
-  //   const details = screen.getByRole('link', { name: moreDetails });
-  //   expect(details).toBeInTheDocument();
-  //   userEvent.click(details);
+  test('Os mapas com localização do pokemon são exibidos', () => {
+    renderWithRouter(<App />);
+    const details = screen.getByRole('link', { name: moreDetails });
+    expect(details).toBeInTheDocument();
+    userEvent.click(details);
 
-  //   const titleLocalization = screen.getByRole(
-  //     'heading', { level: 2, name: 'Game Locations of Pikachu' },
-  //   );
-  //   expect(titleLocalization).toBeInTheDocument();
+    const titleLocalization = screen.getByRole(
+      'heading', { level: 2, name: 'Game Locations of Pikachu' },
+    );
+    expect(titleLocalization).toBeInTheDocument();
 
-  //   const imgLozalization = screen.getAllByAltText('Pikachu location');
-  //   expect(imgLozalization.length).toBe(2);
+    const imgLozalization = screen.getAllByAltText('Pikachu location');
+    expect(imgLozalization.length).toBe(2);
 
-  //   expect(imgLozalization[0]).toHaveAttribute('src', 'https://cdn2.bulbagarden.net/upload/0/08/Kanto_Route_2_Map.png');
-  //   expect(imgLozalization[0]).toBeInTheDocument();
+    expect(imgLozalization[0]).toHaveAttribute('src', 'https://cdn2.bulbagarden.net/upload/0/08/Kanto_Route_2_Map.png');
+    expect(imgLozalization[0]).toBeInTheDocument();
 
-  //   expect(imgLozalization[1]).toHaveAttribute('src', 'https://cdn2.bulbagarden.net/upload/b/bd/Kanto_Celadon_City_Map.png');
-  //   expect(imgLozalization[1]).toBeInTheDocument();
+    expect(imgLozalization[1]).toHaveAttribute('src', 'https://cdn2.bulbagarden.net/upload/b/bd/Kanto_Celadon_City_Map.png');
+    expect(imgLozalization[1]).toBeInTheDocument();
 
-  //   const viridianFlorest = screen.getByText('Kanto Viridian Forest');
-  //   expect(viridianFlorest).toBeInTheDocument();
+    const viridianFlorest = screen.getByText('Kanto Viridian Forest');
+    expect(viridianFlorest).toBeInTheDocument();
 
-  //   const powerPlant = screen.getByText('Kanto Power Plant');
-  //   expect(powerPlant).toBeInTheDocument();
-  // });
+    const powerPlant = screen.getByText('Kanto Power Plant');
+    expect(powerPlant).toBeInTheDocument();
+  });
 });
