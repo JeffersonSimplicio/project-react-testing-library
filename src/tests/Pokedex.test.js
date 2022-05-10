@@ -5,6 +5,8 @@ import App from '../App';
 import renderWithRouter from './renderWithRouter';
 
 describe('Testes da componente pokedex', () => {
+  const pokeType = 'pokemon-type';
+
   test('Possui um h2 com o texto "Encountered pokémons"', () => {
     renderWithRouter(<App />);
     const title = screen.getByRole('heading', { level: 2, name: 'Encountered pokémons' });
@@ -19,6 +21,7 @@ describe('Testes da componente pokedex', () => {
     const pokemonListPartTwo = ['Mew', 'Rapidash', 'Snorlax', 'Dragonair', 'Pikachu'];
     const pokemonList = pokemonListPartOne.concat(pokemonListPartTwo);
 
+    // Verifica também se ao iniciar o filtro selecionado é "All"
     pokemonList.forEach((pokemon) => {
       // Procurar o botão dentro do for para garantir que ele não sumiria
       const nextButton = screen.getByRole('button', { name: 'Próximo pokémon' });
@@ -59,7 +62,7 @@ describe('Testes da componente pokedex', () => {
 
     const buttonTypeBug = screen.getByRole('button', { name: 'Bug' });
     userEvent.click(buttonTypeBug);
-    let checkType = screen.getByTestId('pokemon-type');
+    let checkType = screen.getByTestId(pokeType);
     expect(checkType.innerHTML).toBe('Bug');
 
     // Verifica novamente se o botão All esta na tela
@@ -68,7 +71,30 @@ describe('Testes da componente pokedex', () => {
 
     const buttonTypeNormal = screen.getByRole('button', { name: 'Normal' });
     userEvent.click(buttonTypeNormal);
-    checkType = screen.getByTestId('pokemon-type');
+    checkType = screen.getByTestId(pokeType);
     expect(checkType.innerHTML).toBe('Normal');
+  });
+
+  test('Pokédex contém um botão para resetar o filtro', () => {
+    renderWithRouter(<App />);
+
+    const allKinds = screen.getByRole('button', { name: 'All' });
+    expect(allKinds).toBeInTheDocument();
+
+    const buttonBug = screen.getByRole('button', { name: 'Bug' });
+    expect(buttonBug).toBeInTheDocument();
+    userEvent.click(buttonBug);
+
+    userEvent.click(allKinds);
+
+    let typePokemon = screen.getByTestId(pokeType);
+    expect(typePokemon.innerHTML).toBe('Electric');
+
+    const nextPokemon = screen.getByRole('button', { name: 'Próximo pokémon' });
+    expect(nextPokemon).toBeInTheDocument();
+    userEvent.click(nextPokemon);
+
+    typePokemon = screen.getByTestId(pokeType);
+    expect(typePokemon.innerHTML).toBe('Fire');
   });
 });
