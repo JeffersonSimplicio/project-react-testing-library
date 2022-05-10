@@ -22,10 +22,10 @@ describe('Teste da componente', () => {
     expect(imagePokemon).toBeInTheDocument();
   });
 
-  // test('Card opssui um link para mais detalhes', () => {
-  //   renderWithRouter(<App />);
+  test('Card opssui um link para mais detalhes', () => {
+    renderWithRouter(<App />);
 
-  //   const test = screen.getByRole('link', { name: 'More details' });
-  //   expect(test).toHaveAttribute('href', '/pokemons/25');
-  // });
+    const test = screen.getByRole('link', { name: 'More details' });
+    expect(test).toHaveAttribute('href', '/pokemons/25');
+  });
 });
