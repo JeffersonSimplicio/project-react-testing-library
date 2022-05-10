@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from './renderWithRouter';
 
@@ -25,7 +25,22 @@ describe('Teste da componente', () => {
   test('Card opssui um link para mais detalhes', () => {
     renderWithRouter(<App />);
 
-    const test = screen.getByRole('link', { name: 'More details' });
-    expect(test).toHaveAttribute('href', '/pokemons/25');
+    const linkDetails = screen.getByRole('link', { name: 'More details' });
+    expect(linkDetails).toHaveAttribute('href', '/pokemons/25');
+    expect(linkDetails).toBeInTheDocument();
+  });
+
+  test(`Ao cliclar no link "More details" o usuario é redirecionado
+  para a pagina coerente`, () => {
+    renderWithRouter(<App />);
+
+    const linkDetails = screen.getByRole('link', { name: 'More details' });
+    expect(linkDetails).toBeInTheDocument();
+    userEvent.click(linkDetails);
+
+    const titleDetails = screen.getByRole(
+      'heading', { level: 2, name: 'Pikachu Details' },
+    );
+    expect(titleDetails).toBeInTheDocument();
   });
 });
