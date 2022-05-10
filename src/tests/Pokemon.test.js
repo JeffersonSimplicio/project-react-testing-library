@@ -5,6 +5,8 @@ import App from '../App';
 import renderWithRouter from './renderWithRouter';
 
 describe('Teste da componente', () => {
+  const moreDetails = 'More details';
+
   test('Renderiza as informações corretas do pokemon na tela', () => {
     renderWithRouter(<App />);
 
@@ -25,7 +27,7 @@ describe('Teste da componente', () => {
   test('Card opssui um link para mais detalhes', () => {
     renderWithRouter(<App />);
 
-    const linkDetails = screen.getByRole('link', { name: 'More details' });
+    const linkDetails = screen.getByRole('link', { name: moreDetails });
     expect(linkDetails).toHaveAttribute('href', '/pokemons/25');
     expect(linkDetails).toBeInTheDocument();
   });
@@ -34,7 +36,7 @@ describe('Teste da componente', () => {
   para a pagina coerente`, () => {
     renderWithRouter(<App />);
 
-    const linkDetails = screen.getByRole('link', { name: 'More details' });
+    const linkDetails = screen.getByRole('link', { name: moreDetails });
     expect(linkDetails).toBeInTheDocument();
     userEvent.click(linkDetails);
 
@@ -42,5 +44,16 @@ describe('Teste da componente', () => {
       'heading', { level: 2, name: 'Pikachu Details' },
     );
     expect(titleDetails).toBeInTheDocument();
+  });
+
+  test('A URL é correta ao clicar em "More details"', () => {
+    const { history } = renderWithRouter(<App />);
+
+    const linkDetails = screen.getByRole('link', { name: moreDetails });
+    expect(linkDetails).toBeInTheDocument();
+    userEvent.click(linkDetails);
+
+    const { location: { pathname } } = history;
+    expect(pathname).toBe('/pokemons/25');
   });
 });
