@@ -11,7 +11,8 @@ describe('Testes da componente pokedex', () => {
     expect(title).toBeInTheDocument();
   });
 
-  test('Todos os pokemons são listados ao clicar em proximo', () => {
+  test(`Todos os pokemons são listados ao clicar no botão "Próximo pokémon" e
+  apenas um pokemon por vez`, () => {
     renderWithRouter(<App />);
 
     const pokemonListPartOne = ['Pikachu', 'Charmander', 'Caterpie', 'Ekans', 'Alakazam'];
@@ -23,11 +24,51 @@ describe('Testes da componente pokedex', () => {
       const nextButton = screen.getByRole('button', { name: 'Próximo pokémon' });
       expect(nextButton).toBeInTheDocument();
 
+      // O "getBy..." quera se houver mais de um match
       const namePokemon = screen.getByTestId('pokemon-name');
       expect(namePokemon).toBeInTheDocument();
       expect(namePokemon.innerHTML).toBe(pokemon);
 
       userEvent.click(nextButton);
     });
+  });
+
+  test('Pokédex tem os botões de filtro', () => {
+    renderWithRouter(<App />);
+
+    const buttonAllKinds = screen.getByRole('button', { name: 'All' });
+    expect(buttonAllKinds).toBeInTheDocument();
+
+    const typosList = ['Electric', 'Fire', 'Bug', 'Poison', 'Psychic',
+      'Normal', 'Dragon'];
+    // typosList.forEach((type) => {
+    //   const buttonType = screen.getByRole('button', { name: type });
+    //   expect(buttonType).toBeInTheDocument();
+    // });
+
+    let amountsTypos = 0;
+    typosList.forEach((type) => {
+      const listTypesButtons = screen.getAllByTestId('pokemon-type-button');
+      listTypesButtons.forEach((buttonType) => {
+        if (buttonType.innerHTML === type) {
+          amountsTypos += 1;
+        }
+      });
+    });
+    expect(amountsTypos).toBe(typosList.length);
+
+    const buttonTypeBug = screen.getByRole('button', { name: 'Bug' });
+    userEvent.click(buttonTypeBug);
+    let checkType = screen.getByTestId('pokemon-type');
+    expect(checkType.innerHTML).toBe('Bug');
+
+    // Verifica novamente se o botão All esta na tela
+    const buttonAllPersists = screen.getByRole('button', { name: 'All' });
+    expect(buttonAllPersists).toBeInTheDocument();
+
+    const buttonTypeNormal = screen.getByRole('button', { name: 'Normal' });
+    userEvent.click(buttonTypeNormal);
+    checkType = screen.getByTestId('pokemon-type');
+    expect(checkType.innerHTML).toBe('Normal');
   });
 });
